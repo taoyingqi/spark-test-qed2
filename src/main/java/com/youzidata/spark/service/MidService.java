@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -41,10 +42,12 @@ public class MidService {
 
         // filter data
         Integer topIndex = AlgorithmUtil.wxdLast1DownOn(list, 500 * IConst.WXD_FACTOR);
+        Date topTime = list.get(topIndex).getTime();
         Integer lowerIndex = AlgorithmUtil.wxdFirst1DownOn(list, 0 * IConst.WXD_FACTOR, topIndex);
+        Date lowerTime = list.get(lowerIndex).getTime();
 
-        Log.info("=====topIndex=={}======time=={}=====", topIndex, TimeUtil.formatDate(list.get(topIndex).getTime(), TimeUtil.TIME_MILLIS_TYPE));
-        Log.info("=====lowerIndex=={}======time=={}=====", lowerIndex, TimeUtil.formatDate(list.get(lowerIndex).getTime(), TimeUtil.TIME_MILLIS_TYPE));
+        Log.info("=====topIndex=={}======time=={}=====", topIndex, TimeUtil.formatDate(topTime, TimeUtil.TIME_MILLIS_TYPE));
+        Log.info("=====lowerIndex=={}======time=={}=====", lowerIndex, TimeUtil.formatDate(lowerTime, TimeUtil.TIME_MILLIS_TYPE));
 
 /*        if (topIndex < lowerIndex) {
             Integer temp = topIndex;
@@ -53,7 +56,14 @@ public class MidService {
         }*/
 
         List<RowModel> newList = list.subList(topIndex, lowerIndex);
-//                HiveDataSplit.fliterData(list, lowerTime, topTime);
+//        List<RowModel> newList = HiveDataSplit.fliterData(list, topTime, lowerTime);
+        Log.info("====0=={}", newList.get(0));
+        Log.info("====1=={}", newList.get(1));
+        Log.info("====2=={}", newList.get(2));
+        Log.info("====3=={}", newList.get(3));
+        Log.info("====4=={}", newList.get(4));
+        Log.info("====5=={}", newList.get(5));
+
         Log.info("=====过滤后数据量=={}=====", newList.size());
         out.write(("=====获取500-0=="+(new Date()).getTime()+"===\n").getBytes("UTF-8"));
 

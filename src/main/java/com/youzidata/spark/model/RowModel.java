@@ -1,6 +1,8 @@
 package com.youzidata.spark.model;
 
 
+import com.youzidata.spark.util.TimeUtil;
+
 import java.util.Date;
 
 /**
@@ -65,8 +67,8 @@ public class RowModel {
 
     @Override
     public String toString() {
-        return "Origin{" +
-                "time=" + time +
+        return "RowModel{" +
+                "time=" + TimeUtil.formatDate(time, TimeUtil.TIME_MILLIS_TYPE) +
                 ", wxd=" + wxd +
                 ", qnh=" + qnh +
                 ", height=" + height +

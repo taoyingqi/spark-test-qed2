@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MidHandler {
@@ -51,7 +52,16 @@ public class MidHandler {
         }, Encoders.STRING()).mapGroups(new MapGroupsFunction<String, RowModel, String>() {
             public String call(String key, Iterator<RowModel> values) throws Exception {
                 Log.info("=========begin========"+new Date()+"===========");
-                List<RowModel> list = IteratorUtils.toList(values);
+//                List<RowModel> list = IteratorUtils.toList(values);
+                List<RowModel> list = new LinkedList<RowModel>();
+                int i = 0;
+                while(values.hasNext()) {
+                    i++;
+                    RowModel rowModel = values.next();
+                    if (i > 20500 && i < 21000) {
+                        Log.info("========{}", rowModel);
+                    }
+                }
                 Configuration conf = new Configuration();
                 FileSystem fs = FileSystem.get(conf);
                 Path path = new Path("/flight_decline/flight_"+key+"_qed.csv");
