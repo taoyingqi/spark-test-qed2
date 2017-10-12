@@ -79,7 +79,7 @@ public class HiveDataSplit {
         Integer topIndex = AlgorithmUtil.wxdLast1DownOn(list, 500);
         Date topTime = list.get(topIndex).getTime();
 
-        Integer lowerIndex = AlgorithmUtil.wxdFirst1DownOn(list, 0);
+        Integer lowerIndex = AlgorithmUtil.wxdFirst1DownOn(list, 0, topIndex);
         Date lowerTime = list.get(lowerIndex).getTime();
 
         List<RowModel> newList = fliterData(list, topTime, lowerTime);

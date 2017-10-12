@@ -26,13 +26,21 @@ public class AlgorithmUtil {
 
     //筛选下限
     // 定阶段，按无线电高度（首次）下降到0
-    public static Integer wxdFirst1DownOn(List<RowModel> list, int wxd) {
-        for(int i = 0; i < list.size(); i++){
-            if(list.get(i).getWxd() < wxd){
+    public static Integer wxdFirst1DownOn(List<RowModel> list, int wxd, int start) {
+        for(int i = start; i < list.size(); i++){
+            if(list.get(i).getWxd() <= wxd){
                 return i;
             }
         }
         return null;
+    }
+
+
+    public static int abs(Integer x) {
+        if (x == null) {
+            return 0;
+        }
+        return Math.abs(x);
     }
 
 }

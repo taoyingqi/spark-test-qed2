@@ -40,18 +40,17 @@ public class MidService {
         out.write(("=====排序结束==" + TimeUtil.formatDate(new Date(), TimeUtil.DATE_TIME_MILLIS_TYPE) + "===\n").getBytes("UTF-8"));
 
         // filter data
-        Integer topIndex = AlgorithmUtil.wxdLast1DownOn(list, 500);
+        Integer topIndex = AlgorithmUtil.wxdLast1DownOn(list, 500 * IConst.WXD_FACTOR);
+        Integer lowerIndex = AlgorithmUtil.wxdFirst1DownOn(list, 0 * IConst.WXD_FACTOR, topIndex);
 
-        Integer lowerIndex = AlgorithmUtil.wxdFirst1DownOn(list, 0);
+        Log.info("=====topIndex=={}======time=={}=====", topIndex, TimeUtil.formatDate(list.get(topIndex).getTime(), TimeUtil.TIME_MILLIS_TYPE));
+        Log.info("=====lowerIndex=={}======time=={}=====", lowerIndex, TimeUtil.formatDate(list.get(lowerIndex).getTime(), TimeUtil.TIME_MILLIS_TYPE));
 
-        Log.info("=====topIndex=={}==", topIndex);
-        Log.info("=====lowerIndex=={}==", lowerIndex);
-
-        if (topIndex < lowerIndex) {
+/*        if (topIndex < lowerIndex) {
             Integer temp = topIndex;
             topIndex = lowerIndex;
             lowerIndex = temp;
-        }
+        }*/
 
         List<RowModel> newList = list.subList(lowerIndex, topIndex);
 //                HiveDataSplit.fliterData(list, lowerTime, topTime);
@@ -69,6 +68,7 @@ public class MidService {
     }
 
     public static List<Mid> calc(List<RowModel> list) {
+        Log.info("=========list.size=={}=====", list.size());
         List<Mid> midList = new ArrayList<Mid>();
         for (int i = 0; i < list.size(); i++) {
             RowModel rowModel = list.get(i);

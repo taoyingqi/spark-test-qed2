@@ -64,7 +64,7 @@ public class MidHandler {
                 return key;
             }
         }, Encoders.STRING());
-
+//        result.show();
         long num = result.count();
         Log.info("======共计=======" + num + "=====个航班=====");
 
