@@ -193,12 +193,19 @@ public class MidService {
             if (mid.getMultiCond() != null && !mid.getMultiCond()) {
                 end = i;
             }
-            if (start != 0 && end != 0 && start < end) {
+            if (start != 0 && start < end) {
                 // 计算持续时间
                 midList.get(start).setDurationSec(1);
                 midList.get(end -1).setDurationSec((int) (midList.get(end - 1).getHeightFh().getTime().getTime() - midList.get(start).getHeightFh().getTime().getTime() + 250));
                 start = 0; end = 0;
             }
+        }
+        // 末尾 MultiCond 一直为 true
+        if (start > end) {
+            // 计算持续时间
+            midList.get(start).setDurationSec(1);
+            end = midList.size();
+            midList.get(end -1).setDurationSec((int) (midList.get(end - 1).getHeightFh().getTime().getTime() - midList.get(start).getHeightFh().getTime().getTime() + 250));
         }
         return midList;
     }
