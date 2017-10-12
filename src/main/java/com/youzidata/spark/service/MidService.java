@@ -21,7 +21,7 @@ import java.util.List;
  * Created by MT-T450 on 2017/6/8.
  */
 public class MidService {
-    private static final Logger LOG = LoggerFactory.getLogger(MidService.class);
+    private static final Logger Log = LoggerFactory.getLogger(MidService.class);
 
     public static List<Mid> dataProcess(List<RowModel> list, FSDataOutputStream out) throws Exception {
         out.write(("=====开始计算==" + TimeUtil.formatDate(new Date(), TimeUtil.DATE_TIME_MILLIS_TYPE) + "===\n").getBytes("UTF-8"));
@@ -41,16 +41,26 @@ public class MidService {
 
         // filter data
         Integer topIndex = AlgorithmUtil.wxdLast1DownOn(list, 500);
-        Date topTime = list.get(topIndex).getTime();
 
         Integer lowerIndex = AlgorithmUtil.wxdFirst1DownOn(list, 0);
-        Date lowerTime = list.get(lowerIndex).getTime();
 
-        List<RowModel> newList = HiveDataSplit.fliterData(list, topTime, lowerTime);
+        Log.info("=====topIndex=={}==", topIndex);
+        Log.info("=====lowerIndex=={}==", lowerIndex);
+
+        if (topIndex < lowerIndex) {
+            Integer temp = topIndex;
+            topIndex = lowerIndex;
+            lowerIndex = temp;
+        }
+
+        List<RowModel> newList = list.subList(lowerIndex, topIndex);
+//                HiveDataSplit.fliterData(list, lowerTime, topTime);
+        Log.info("=====过滤后数据量=={}=====", newList.size());
         out.write(("=====获取500-0=="+(new Date()).getTime()+"===\n").getBytes("UTF-8"));
 
         // mid calc
         List<Mid> midList = calc(newList);
+        Log.info("=====处理后数据量=={}=====", midList.size());
 
         write(midList, out);
         out.write(("=====写入中间表=="+(new Date()).getTime()+"===\n").getBytes("UTF-8"));
@@ -272,10 +282,14 @@ public class MidService {
                 row += "," + mid.getWxdCond()
                         + "," + mid.getQnhCond()
                         + "," + mid.getHeightCond()
-                        + "," + mid.getMultiCond()
-                        + "," + mid.getDurationSec();
+                        + "," + mid.getMultiCond();
             } else {
-                row += ",,,,,";
+                row += ",,,,";
+            }
+            if (mid.getDurationSec() != null) {
+                row += "," + mid.getDurationSec();
+            } else {
+                row += ",";
             }
             row += "\n";
             out.write(row.getBytes("UTF-8"));

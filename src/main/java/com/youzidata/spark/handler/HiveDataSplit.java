@@ -90,7 +90,7 @@ public class HiveDataSplit {
 
     }
 
-    public static List<RowModel> fliterData(List<RowModel> list, Date maxTime, Date minTime){
+    public static List<RowModel> fliterData(List<RowModel> list, Date minTime, Date maxTime){
         List<RowModel> flightList = new ArrayList<RowModel>();
         // 开始标志
         boolean startflag = false;
