@@ -125,6 +125,10 @@ public class UltimateService {
         Sample downRateGt500LdSample = new Sample();
         for (int i = 0; i < midList.size(); i++) {
             Mid mid = midList.get(i);
+            // 跳过空
+            if (mid.getDurationSec() == null) {
+                continue;
+            }
             if (mid.getDurationSec().equals(1)) {
                 downRateGt500LdSample.setStartTime(mid.getHeightFh().getTime());
             }
@@ -161,16 +165,26 @@ public class UltimateService {
 
     public static void write(Ultimate ultimate, FSDataOutputStream out) throws IOException {
         String row = ultimate.getFlightId()
-                + "," + ultimate.getDown500n() + "," + ultimate.getLast1Down500Time()
-                + "," + ultimate.getDown0n() + "," + ultimate.getFirst1Down0Time()
-                + "," + ultimate.getDurationTime()
+                + "," + ultimate.getDown500n()
+                + "," + TimeUtil.formatDate(ultimate.getLast1Down500Time(), TimeUtil.TIME_MILLIS_TYPE)
+                + "," + ultimate.getDown0n()
+                + "," + TimeUtil.formatDate(ultimate.getFirst1Down0Time(), TimeUtil.TIME_MILLIS_TYPE)
+                + "," + TimeUtil.formatDate(ultimate.getDurationTime(), TimeUtil.TIME_MILLIS_TYPE)
 
-                + "," + ultimate.getWxdMdc().getStartTime() + "," + ultimate.getWxdMdc().getEndTime() + "," + ultimate.getWxdMdc().getDownRate()
-                + "," + ultimate.getQnhMdc().getStartTime() + "," + ultimate.getQnhMdc().getEndTime() + "," + ultimate.getQnhMdc().getDownRate()
-                + "," + ultimate.getHeightMdc().getStartTime() + "," + ultimate.getHeightMdc().getEndTime() + "," + ultimate.getHeightMdc().getDownRate()
+                + "," + TimeUtil.formatDate(ultimate.getWxdMdc().getStartTime(), TimeUtil.TIME_MILLIS_TYPE)
+                + "," + TimeUtil.formatDate(ultimate.getWxdMdc().getEndTime(), TimeUtil.TIME_MILLIS_TYPE)
+                + "," + ultimate.getWxdMdc().getDownRate()
+                + "," + TimeUtil.formatDate(ultimate.getQnhMdc().getStartTime(), TimeUtil.TIME_MILLIS_TYPE)
+                + "," + TimeUtil.formatDate(ultimate.getQnhMdc().getEndTime(), TimeUtil.TIME_MILLIS_TYPE)
+                + "," + ultimate.getQnhMdc().getDownRate()
+                + "," + TimeUtil.formatDate(ultimate.getHeightMdc().getStartTime(), TimeUtil.TIME_MILLIS_TYPE)
+                + "," + TimeUtil.formatDate(ultimate.getHeightMdc().getEndTime(), TimeUtil.TIME_MILLIS_TYPE)
+                + "," + ultimate.getHeightMdc().getDownRate()
 
                 + "," + ultimate.getDownRateGt500n()
-                + "," + ultimate.getDownRateGt500Ld().getStartTime() + "," + ultimate.getDownRateGt500Ld().getEndTime() + "," + ultimate.getDownRateGt500Ld().getDurationSec();
+                + "," + TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getStartTime(), TimeUtil.TIME_MILLIS_TYPE)
+                + "," + TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getEndTime(), TimeUtil.TIME_MILLIS_TYPE)
+                + "," + ultimate.getDownRateGt500Ld().getDurationSec();
 //		System.out.println(row);
         out.write(("=====最终结果=====\n").getBytes("UTF-8"));
         out.write((row + "\n").getBytes("UTF-8"));

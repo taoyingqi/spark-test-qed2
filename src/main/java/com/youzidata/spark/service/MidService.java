@@ -52,7 +52,7 @@ public class MidService {
             lowerIndex = temp;
         }*/
 
-        List<RowModel> newList = list.subList(lowerIndex, topIndex);
+        List<RowModel> newList = list.subList(topIndex, lowerIndex);
 //                HiveDataSplit.fliterData(list, lowerTime, topTime);
         Log.info("=====过滤后数据量=={}=====", newList.size());
         out.write(("=====获取500-0=="+(new Date()).getTime()+"===\n").getBytes("UTF-8"));
