@@ -6,6 +6,7 @@ import com.youzidata.spark.model.RowModel;
 import com.youzidata.spark.model.Sample;
 import com.youzidata.spark.model.Ultimate;
 import com.youzidata.spark.util.AlgorithmUtil;
+import com.youzidata.spark.util.MidUtil;
 import com.youzidata.spark.util.TimeUtil;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.slf4j.Logger;
@@ -173,7 +174,7 @@ public class UltimateService {
 
                 + "," + TimeUtil.formatDate(ultimate.getWxdMdc().getStartTime(), TimeUtil.TIME_MILLIS_TYPE)
                 + "," + TimeUtil.formatDate(ultimate.getWxdMdc().getEndTime(), TimeUtil.TIME_MILLIS_TYPE)
-                + "," + ultimate.getWxdMdc().getDownRate()
+                + "," + MidUtil.devWxdFactor(ultimate.getWxdMdc().getDownRate())
                 + "," + TimeUtil.formatDate(ultimate.getQnhMdc().getStartTime(), TimeUtil.TIME_MILLIS_TYPE)
                 + "," + TimeUtil.formatDate(ultimate.getQnhMdc().getEndTime(), TimeUtil.TIME_MILLIS_TYPE)
                 + "," + ultimate.getQnhMdc().getDownRate()
