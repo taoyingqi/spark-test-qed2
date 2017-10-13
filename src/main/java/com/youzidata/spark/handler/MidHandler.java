@@ -50,16 +50,6 @@ public class MidHandler {
             public String call(String key, Iterator<RowModel> values) throws Exception {
                 Log.info("=========begin========"+new Date()+"===========");
                 List<RowModel> list = IteratorUtils.toList(values);
-                Collections.sort(list, new Comparator<RowModel>() {
-                    public int compare(RowModel o1, RowModel o2) {
-                        return o1.getTime().compareTo(o2.getTime());
-                    }
-                });
-                for (int i = 0; i < list.size(); i++) {
-                    if (i > 20521 && i < 20700) {
-                        Log.info("========{}", list.get(i));
-                    }
-                }
                 Configuration conf = new Configuration();
                 FileSystem fs = FileSystem.get(conf);
                 Path path = new Path("/flight_decline/flight_"+key+"_qed.csv");

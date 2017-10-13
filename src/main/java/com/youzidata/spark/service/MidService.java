@@ -6,6 +6,7 @@ import com.youzidata.spark.model.Mid;
 import com.youzidata.spark.model.RowModel;
 import com.youzidata.spark.model.Sample;
 import com.youzidata.spark.util.AlgorithmUtil;
+import com.youzidata.spark.util.MidUtil;
 import com.youzidata.spark.util.TimeUtil;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.slf4j.Logger;
@@ -226,14 +227,14 @@ public class MidService {
             Mid mid = list.get(i);
             String row = mid.getFlightId()
                     + "," + TimeUtil.formatDate(mid.getWxdFh().getTime(), TimeUtil.TIME_MILLIS_TYPE)
-                    + "," + mid.getWxdFh().getHeight();
+                    + "," + MidUtil.devWxdFactor(mid.getWxdFh().getHeight());
 
             if (i < 2) {
                 row += ",,,";
             } else {
                 row += "," + TimeUtil.formatDate(mid.getWxdFh().getSample1().getStartTime(), TimeUtil.TIME_MILLIS_TYPE)
                         + "," + TimeUtil.formatDate(mid.getWxdFh().getSample1().getEndTime(), TimeUtil.TIME_MILLIS_TYPE)
-                        + "," + mid.getWxdFh().getSample1().getDownRate();
+                        + "," + MidUtil.devWxdFactor(mid.getWxdFh().getSample1().getDownRate());
             }
 
             if (i < 10) {
@@ -241,7 +242,7 @@ public class MidService {
             } else {
                 row += "," + TimeUtil.formatDate(mid.getWxdFh().getSample2().getStartTime(), TimeUtil.TIME_MILLIS_TYPE)
                         + "," + TimeUtil.formatDate(mid.getWxdFh().getSample2().getEndTime(), TimeUtil.TIME_MILLIS_TYPE)
-                        + "," + mid.getWxdFh().getSample2().getDownRate();
+                        + "," + MidUtil.devWxdFactor(mid.getWxdFh().getSample2().getDownRate());
             }
 
             row += "," + TimeUtil.formatDate(mid.getQnhFh().getTime(), TimeUtil.TIME_MILLIS_TYPE);

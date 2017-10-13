@@ -4,6 +4,7 @@ import com.youzidata.spark.config.IConst;
 import com.youzidata.spark.model.Mid;
 import com.youzidata.spark.model.RowModel;
 import com.youzidata.spark.util.AlgorithmUtil;
+import com.youzidata.spark.util.MidUtil;
 import com.youzidata.spark.util.TimeUtil;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.spark.api.java.function.FlatMapFunction;
@@ -35,7 +36,7 @@ public class HiveDataSplit {
                 List<RowModel> list = new ArrayList<RowModel>();
                 try {
                     Date time = TimeUtil.parseDate(r.getString(0), TimeUtil.TIME_MILLIS_TYPE);
-                    Integer RALTC = (int) (Float.parseFloat(r.getString(1).trim()) * IConst.WXD_FACTOR);
+                    Integer RALTC = MidUtil.mulWxdFactor(Float.parseFloat(r.getString(1).trim()));
                     Integer ALT_QNH = Integer.parseInt(r.getString(2));
                     Integer HEIGHT = Integer.parseInt(r.getString(3));
                     String ID = r.getString(4);
