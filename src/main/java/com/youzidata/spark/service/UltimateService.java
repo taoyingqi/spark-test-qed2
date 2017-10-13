@@ -187,7 +187,7 @@ public class UltimateService {
                 + "," + TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getEndTime(), TimeUtil.TIME_MILLIS_TYPE)
                 + "," + ultimate.getDownRateGt500Ld().getDurationSec();
 //		System.out.println(row);
-        out.write(("=====最终结果=====\n").getBytes("UTF-8"));
+//        out.write(("=====最终结果=====\n").getBytes("UTF-8"));
         out.write((row + "\n").getBytes("UTF-8"));
     }
 
