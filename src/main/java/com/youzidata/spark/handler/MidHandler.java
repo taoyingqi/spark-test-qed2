@@ -4,6 +4,7 @@ import com.youzidata.spark.model.Mid;
 import com.youzidata.spark.model.MidResult;
 import com.youzidata.spark.model.RowModel;
 import com.youzidata.spark.service.MidService;
+import com.youzidata.spark.util.MidUtil;
 import com.youzidata.spark.util.TimeUtil;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.hadoop.conf.Configuration;
@@ -85,13 +86,17 @@ public class MidHandler {
             MidResult midResult = new MidResult();
             midResult.setFlightId(mid.getFlightId());
 
+            midResult.setWxdFhTime(TimeUtil.formatDate(mid.getWxdFh().getTime(), TimeUtil.TIME_MILLIS_TYPE));
+            midResult.setWxdFhHeight(MidUtil.devWxdFactor(mid.getWxdFh().getHeight()));
             midResult.setWxdFhStartTime(TimeUtil.formatDate(mid.getWxdFh().getSample1().getStartTime(), TimeUtil.TIME_MILLIS_TYPE));
             midResult.setWxdFhEndTime(TimeUtil.formatDate(mid.getWxdFh().getSample1().getEndTime(), TimeUtil.TIME_MILLIS_TYPE));
-            midResult.setWxdFhDownRate(mid.getWxdFh().getSample1().getDownRate());
+            midResult.setWxdFhDownRate(MidUtil.devWxdFactor(mid.getWxdFh().getSample1().getDownRate()));
             midResult.setWxdFhAvgStartTime(TimeUtil.formatDate(mid.getWxdFh().getSample2().getStartTime(), TimeUtil.TIME_MILLIS_TYPE));
             midResult.setWxdFhAvgEndTime(TimeUtil.formatDate(mid.getWxdFh().getSample2().getEndTime(), TimeUtil.TIME_MILLIS_TYPE));
-            midResult.setWxdFhAvgDownRate(mid.getWxdFh().getSample2().getDownRate());
+            midResult.setWxdFhAvgDownRate(MidUtil.devWxdFactor(mid.getWxdFh().getSample2().getDownRate()));
 
+            midResult.setQnhFhTime(TimeUtil.formatDate(mid.getQnhFh().getTime(), TimeUtil.TIME_MILLIS_TYPE));
+            midResult.setQnhFhHeight(mid.getQnhFh().getHeight());
             midResult.setQnhFhStartTime(TimeUtil.formatDate(mid.getQnhFh().getSample1().getStartTime(), TimeUtil.TIME_MILLIS_TYPE));
             midResult.setQnhFhEndTime(TimeUtil.formatDate(mid.getQnhFh().getSample1().getEndTime(), TimeUtil.TIME_MILLIS_TYPE));
             midResult.setQnhFhDownRate(mid.getQnhFh().getSample1().getDownRate());
@@ -99,6 +104,8 @@ public class MidHandler {
             midResult.setQnhFhAvgEndTime(TimeUtil.formatDate(mid.getQnhFh().getSample2().getEndTime(), TimeUtil.TIME_MILLIS_TYPE));
             midResult.setQnhFhAvgDownRate(mid.getQnhFh().getSample2().getDownRate());
 
+            midResult.setHeightFhTime(TimeUtil.formatDate(mid.getHeightFh().getTime(), TimeUtil.TIME_MILLIS_TYPE));
+            midResult.setHeightFhHeight(mid.getHeightFh().getHeight());
             midResult.setHeightFhStartTime(TimeUtil.formatDate(mid.getHeightFh().getSample1().getStartTime(), TimeUtil.TIME_MILLIS_TYPE));
             midResult.setHeightFhEndTime(TimeUtil.formatDate(mid.getHeightFh().getSample1().getEndTime(), TimeUtil.TIME_MILLIS_TYPE));
             midResult.setHeightFhDownRate(mid.getHeightFh().getSample1().getDownRate());

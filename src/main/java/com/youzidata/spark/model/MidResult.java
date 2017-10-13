@@ -9,23 +9,35 @@ public class MidResult {
     private String flightId;
 
     //无线电高度
+    private String wxdFhTime;
+    private Float wxdFhHeight;
     private String wxdFhStartTime; //起始时刻
     private String wxdFhEndTime; //截止时刻
-    private Integer wxdFhDownRate; //下降率
+    private Float wxdFhDownRate; //下降率
+    private String wxdFhAvgTime;
+    private Float wxdFhAvgHeight;
     private String wxdFhAvgStartTime; //起始时刻
     private String wxdFhAvgEndTime; //截止时刻
-    private Integer wxdFhAvgDownRate; //下降率（平均）
+    private Float wxdFhAvgDownRate; //下降率（平均）
     //QNH高度
+    private String qnhFhTime;
+    private Integer qnhFhHeight;
     private String qnhFhStartTime; //起始时刻
     private String qnhFhEndTime; //截止时刻
     private Integer qnhFhDownRate; //下降率
+    private String qnhFhAvgTime;
+    private Integer qnhFhAvgHeight;
     private String qnhFhAvgStartTime; //起始时刻
     private String qnhFhAvgEndTime; //截止时刻
     private Integer qnhFhAvgDownRate; //下降率（平均）
     //Height高度
+    private String heightFhTime;
+    private Integer heightFhHeight;
     private String heightFhStartTime; //起始时刻
     private String heightFhEndTime; //截止时刻
     private Integer heightFhDownRate; //下降率
+    private String heightFhAvgTime;
+    private Integer heightFhAvgHeight;
     private String heightFhAvgStartTime; //起始时刻
     private String heightFhAvgEndTime; //截止时刻
     private Integer heightFhAvgDownRate; //下降率（平均）
@@ -44,6 +56,22 @@ public class MidResult {
         this.flightId = flightId;
     }
 
+    public String getWxdFhTime() {
+        return wxdFhTime;
+    }
+
+    public void setWxdFhTime(String wxdFhTime) {
+        this.wxdFhTime = wxdFhTime;
+    }
+
+    public Float getWxdFhHeight() {
+        return wxdFhHeight;
+    }
+
+    public void setWxdFhHeight(Float wxdFhHeight) {
+        this.wxdFhHeight = wxdFhHeight;
+    }
+
     public String getWxdFhStartTime() {
         return wxdFhStartTime;
     }
@@ -60,12 +88,28 @@ public class MidResult {
         this.wxdFhEndTime = wxdFhEndTime;
     }
 
-    public Integer getWxdFhDownRate() {
+    public Float getWxdFhDownRate() {
         return wxdFhDownRate;
     }
 
-    public void setWxdFhDownRate(Integer wxdFhDownRate) {
+    public void setWxdFhDownRate(Float wxdFhDownRate) {
         this.wxdFhDownRate = wxdFhDownRate;
+    }
+
+    public String getWxdFhAvgTime() {
+        return wxdFhAvgTime;
+    }
+
+    public void setWxdFhAvgTime(String wxdFhAvgTime) {
+        this.wxdFhAvgTime = wxdFhAvgTime;
+    }
+
+    public Float getWxdFhAvgHeight() {
+        return wxdFhAvgHeight;
+    }
+
+    public void setWxdFhAvgHeight(Float wxdFhAvgHeight) {
+        this.wxdFhAvgHeight = wxdFhAvgHeight;
     }
 
     public String getWxdFhAvgStartTime() {
@@ -84,12 +128,28 @@ public class MidResult {
         this.wxdFhAvgEndTime = wxdFhAvgEndTime;
     }
 
-    public Integer getWxdFhAvgDownRate() {
+    public Float getWxdFhAvgDownRate() {
         return wxdFhAvgDownRate;
     }
 
-    public void setWxdFhAvgDownRate(Integer wxdFhAvgDownRate) {
+    public void setWxdFhAvgDownRate(Float wxdFhAvgDownRate) {
         this.wxdFhAvgDownRate = wxdFhAvgDownRate;
+    }
+
+    public String getQnhFhTime() {
+        return qnhFhTime;
+    }
+
+    public void setQnhFhTime(String qnhFhTime) {
+        this.qnhFhTime = qnhFhTime;
+    }
+
+    public Integer getQnhFhHeight() {
+        return qnhFhHeight;
+    }
+
+    public void setQnhFhHeight(Integer qnhFhHeight) {
+        this.qnhFhHeight = qnhFhHeight;
     }
 
     public String getQnhFhStartTime() {
@@ -116,6 +176,22 @@ public class MidResult {
         this.qnhFhDownRate = qnhFhDownRate;
     }
 
+    public String getQnhFhAvgTime() {
+        return qnhFhAvgTime;
+    }
+
+    public void setQnhFhAvgTime(String qnhFhAvgTime) {
+        this.qnhFhAvgTime = qnhFhAvgTime;
+    }
+
+    public Integer getQnhFhAvgHeight() {
+        return qnhFhAvgHeight;
+    }
+
+    public void setQnhFhAvgHeight(Integer qnhFhAvgHeight) {
+        this.qnhFhAvgHeight = qnhFhAvgHeight;
+    }
+
     public String getQnhFhAvgStartTime() {
         return qnhFhAvgStartTime;
     }
@@ -140,6 +216,22 @@ public class MidResult {
         this.qnhFhAvgDownRate = qnhFhAvgDownRate;
     }
 
+    public String getHeightFhTime() {
+        return heightFhTime;
+    }
+
+    public void setHeightFhTime(String heightFhTime) {
+        this.heightFhTime = heightFhTime;
+    }
+
+    public Integer getHeightFhHeight() {
+        return heightFhHeight;
+    }
+
+    public void setHeightFhHeight(Integer heightFhHeight) {
+        this.heightFhHeight = heightFhHeight;
+    }
+
     public String getHeightFhStartTime() {
         return heightFhStartTime;
     }
@@ -162,6 +254,22 @@ public class MidResult {
 
     public void setHeightFhDownRate(Integer heightFhDownRate) {
         this.heightFhDownRate = heightFhDownRate;
+    }
+
+    public String getHeightFhAvgTime() {
+        return heightFhAvgTime;
+    }
+
+    public void setHeightFhAvgTime(String heightFhAvgTime) {
+        this.heightFhAvgTime = heightFhAvgTime;
+    }
+
+    public Integer getHeightFhAvgHeight() {
+        return heightFhAvgHeight;
+    }
+
+    public void setHeightFhAvgHeight(Integer heightFhAvgHeight) {
+        this.heightFhAvgHeight = heightFhAvgHeight;
     }
 
     public String getHeightFhAvgStartTime() {
