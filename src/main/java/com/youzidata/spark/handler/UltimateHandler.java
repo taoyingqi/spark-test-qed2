@@ -71,6 +71,8 @@ public class UltimateHandler {
         long num = result.count();
         Log.info("======共计=======" + num + "=====个航班=====");
 
+        result.show();
+
         Log.info("=========完成执行==="+new Date()+"========");
 
         sparkSession.close();
