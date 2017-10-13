@@ -1,10 +1,11 @@
 package com.youzidata.spark.handler;
 
-import com.youzidata.spark.model.Mid;
 import com.youzidata.spark.model.RowModel;
+import com.youzidata.spark.model.UltimateResult;
 import com.youzidata.spark.model.Ultimate;
-import com.youzidata.spark.service.MidService;
 import com.youzidata.spark.service.UltimateService;
+import com.youzidata.spark.util.MidUtil;
+import com.youzidata.spark.util.TimeUtil;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataOutputStream;
@@ -43,13 +44,13 @@ public class UltimateHandler {
 
         Log.info("================数据拆分时间========="+new Date()+"=============");
 
-        Dataset<Ultimate> result = splitData.groupByKey(new MapFunction<RowModel,String>() {
+        Dataset<UltimateResult> result = splitData.groupByKey(new MapFunction<RowModel,String>() {
 
             public String call(RowModel value) throws Exception {
                 return value.getFlightId();
             }
-        }, Encoders.STRING()).mapGroups(new MapGroupsFunction<String, RowModel, Ultimate>() {
-            public Ultimate call(String key, Iterator<RowModel> values) throws Exception {
+        }, Encoders.STRING()).mapGroups(new MapGroupsFunction<String, RowModel, UltimateResult>() {
+            public UltimateResult call(String key, Iterator<RowModel> values) throws Exception {
                 Log.info("=========begin========"+new Date()+"===========");
                 List<RowModel> list = IteratorUtils.toList(values);
                 Configuration conf = new Configuration();
@@ -64,9 +65,12 @@ public class UltimateHandler {
 
                 Log.info("============="+key+"===finish===========");
                 Log.info("=========end========"+new Date()+"===========");
-                return ultimate;
+
+                UltimateResult ultimateResult = toResult(ultimate);
+
+                return ultimateResult;
             }
-        }, Encoders.bean(Ultimate.class));
+        }, Encoders.bean(UltimateResult.class));
 
         long num = result.count();
         Log.info("======共计=======" + num + "=====个航班=====");
@@ -76,6 +80,34 @@ public class UltimateHandler {
         Log.info("=========完成执行==="+new Date()+"========");
 
         sparkSession.close();
+    }
+
+    public static UltimateResult toResult(Ultimate ultimate) {
+        UltimateResult ultimateResult = new UltimateResult();
+        ultimateResult.setFlightId(ultimate.getFlightId());
+        ultimateResult.setDown500n(ultimate.getDown500n());
+        ultimateResult.setLast1Down500Time(TimeUtil.formatDate(ultimate.getLast1Down500Time(), TimeUtil.TIME_MILLIS_TYPE));
+        ultimateResult.setDown0n(ultimate.getDown0n());
+        ultimateResult.setFirst1Down0Time(TimeUtil.formatDate(ultimate.getFirst1Down0Time(), TimeUtil.TIME_MILLIS_TYPE));
+        ultimateResult.setDurationTime(TimeUtil.formatDate(ultimate.getDurationTime(), TimeUtil.TIME_MILLIS_TYPE));
+
+        ultimateResult.setWxdMdcStartTime(TimeUtil.formatDate(ultimate.getWxdMdc().getStartTime(), TimeUtil.TIME_MILLIS_TYPE));
+        ultimateResult.setWxdMdcEndTime(TimeUtil.formatDate(ultimate.getWxdMdc().getEndTime(), TimeUtil.TIME_MILLIS_TYPE));
+        ultimateResult.setWxdMdcDownRate(MidUtil.devWxdFactor(ultimate.getWxdMdc().getDownRate()));
+
+        ultimateResult.setQnhMdcStartTime(TimeUtil.formatDate(ultimate.getQnhMdc().getStartTime(), TimeUtil.TIME_MILLIS_TYPE));
+        ultimateResult.setQnhMdcEndTime(TimeUtil.formatDate(ultimate.getQnhMdc().getEndTime(), TimeUtil.TIME_MILLIS_TYPE));
+        ultimateResult.setQnhMdcDownRate(ultimate.getQnhMdc().getDownRate());
+
+        ultimateResult.setHeightMdcStartTime(TimeUtil.formatDate(ultimate.getHeightMdc().getStartTime(), TimeUtil.TIME_MILLIS_TYPE));
+        ultimateResult.setHeightMdcEndTime(TimeUtil.formatDate(ultimate.getHeightMdc().getEndTime(), TimeUtil.TIME_MILLIS_TYPE));
+        ultimateResult.setHeightMdcDownRate(ultimate.getHeightMdc().getDownRate());
+
+        ultimateResult.setDownRateGt500n(ultimate.getDownRateGt500n());
+        ultimateResult.setDownRateGt500LdStartTime(TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getStartTime(), TimeUtil.TIME_MILLIS_TYPE));
+        ultimateResult.setDownRateGt500LdEndTime(TimeUtil.formatDate(ultimate.getDownRateGt500Ld().getEndTime(), TimeUtil.TIME_MILLIS_TYPE));
+        ultimateResult.setDownRateGt500LdDurationSec(ultimate.getDownRateGt500Ld().getDurationSec());
+        return ultimateResult;
     }
 
 }
