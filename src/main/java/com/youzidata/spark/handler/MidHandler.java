@@ -14,10 +14,7 @@ import org.apache.spark.sql.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class MidHandler {
     private final static Logger Log = LoggerFactory.getLogger(MidHandler.class);
@@ -34,7 +31,7 @@ public class MidHandler {
 
 //		Dataset<Row> df = sqlCtx.sql("SELECT TIME0,ALT_QNH,HEIGHT,RALTC,ID from china_east_airlines_99990");
 //		Dataset<Row> df = sqlCtx.sql("SELECT TIME0,ALT_QNH,HEIGHT,RALTC,ID from china_east_airlines_bdx");
-        Dataset<Row> df = sqlCtx.sql("select START_TIME,RALTC,ALT_QNH,HEIGHT,ID from dh_data");
+        Dataset<Row> df = sqlCtx.sql("select START_TIME,RALTC,ALT_QNH,HEIGHT,ID from dh_data order by START_TIME");
 
         Log.info("================数据查询时间========="+new Date()+"=============");
 
@@ -52,14 +49,15 @@ public class MidHandler {
         }, Encoders.STRING()).mapGroups(new MapGroupsFunction<String, RowModel, String>() {
             public String call(String key, Iterator<RowModel> values) throws Exception {
                 Log.info("=========begin========"+new Date()+"===========");
-//                List<RowModel> list = IteratorUtils.toList(values);
-                List<RowModel> list = new LinkedList<RowModel>();
-                int i = 0;
-                while(values.hasNext()) {
-                    i++;
-                    RowModel rowModel = values.next();
-                    if (i > 20500 && i < 21000) {
-                        Log.info("========{}", rowModel);
+                List<RowModel> list = IteratorUtils.toList(values);
+                Collections.sort(list, new Comparator<RowModel>() {
+                    public int compare(RowModel o1, RowModel o2) {
+                        return o1.getTime().compareTo(o2.getTime());
+                    }
+                });
+                for (int i = 0; i < list.size(); i++) {
+                    if (i > 20521 && i < 20700) {
+                        Log.info("========{}", list.get(i));
                     }
                 }
                 Configuration conf = new Configuration();

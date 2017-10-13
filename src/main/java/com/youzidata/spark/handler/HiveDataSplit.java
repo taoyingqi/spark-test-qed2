@@ -35,23 +35,22 @@ public class HiveDataSplit {
                 List<RowModel> list = new ArrayList<RowModel>();
                 try {
                     Date time = TimeUtil.parseDate(r.getString(0), TimeUtil.TIME_MILLIS_TYPE);
-                    String[] RALTC = r.getString(3).trim().split("\\s+");
-                    Integer ALT_QNH = Integer.parseInt(r.getString(1));
-                    Integer HEIGHT = Integer.parseInt(r.getString(2));
+                    Integer RALTC = (int) (Float.parseFloat(r.getString(1).trim()) * IConst.WXD_FACTOR);
+                    Integer ALT_QNH = Integer.parseInt(r.getString(2));
+                    Integer HEIGHT = Integer.parseInt(r.getString(3));
                     String ID = r.getString(4);
 //                Date date_time = TimeUtil.parseDate(r.getString(5), "yyyyMMdd");
 
-                    for (String s : RALTC) {
-                        RowModel row = new RowModel();
-                        row.setTime(time);
-                        row.setWxd((int) (Float.parseFloat(s) * IConst.WXD_FACTOR));
-                        row.setQnh(ALT_QNH);
-                        row.setHeight(HEIGHT);
-                        row.setFlightId(ID);
+                    RowModel row = new RowModel();
+                    row.setTime(time);
+                    row.setWxd(RALTC);
+                    row.setQnh(ALT_QNH);
+                    row.setHeight(HEIGHT);
+                    row.setFlightId(ID);
 //                    row.setDate(date_time);
-                        list.add(row);
-                    }
+                    list.add(row);
                 } catch (Exception e) {
+                    Log.error(e.getMessage(), e);
                 }
                 return list.iterator();
             }
