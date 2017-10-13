@@ -28,7 +28,7 @@ public class UltimateService {
         Log.info("=====midList.size=={}==", midList.size());
 
         // filter data
-        Integer topIndex = AlgorithmUtil.wxdLast1DownOn(list, 800 * IConst.WXD_FACTOR);
+        Integer topIndex = AlgorithmUtil.floor4(AlgorithmUtil.wxdLast1DownOn(list, 800 * IConst.WXD_FACTOR));
         Log.info("=====topIndex=={}======time=={}=====", topIndex, TimeUtil.formatDate(list.get(topIndex).getTime(), TimeUtil.TIME_MILLIS_TYPE));
 
         List<RowModel> newList = list.subList(topIndex, list.size());

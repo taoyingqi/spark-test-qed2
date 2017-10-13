@@ -1,6 +1,7 @@
 package com.youzidata.spark;
 
 import com.youzidata.spark.model.RowModel;
+import com.youzidata.spark.util.AlgorithmUtil;
 import com.youzidata.spark.util.TimeUtil;
 import org.junit.Test;
 
@@ -54,4 +55,33 @@ public class ListTest {
 
     }
 
+    @Test
+    public void testSub() {
+        List<String> list = new ArrayList<String>();
+        list.add("a");
+        list.add("b");
+        list.add("c");
+        list.add("d");
+        list.add("e");
+        list.add("f");
+        List<String> subList = list.subList(1, 3);
+        for (String s : subList) {
+            System.out.println(s);
+        }
+    }
+
+
+    @Test
+    public void testNum() {
+        int i = 100;
+        System.out.println(i - (i + 1) % 4);
+    }
+
+    @Test
+    public void testFloor4() {
+        System.out.println(AlgorithmUtil.floor4(10));
+        System.out.println(AlgorithmUtil.floor4(6));
+        System.out.println(AlgorithmUtil.ceil4(6));
+        System.out.println(AlgorithmUtil.ceil4(26));
+    }
 }

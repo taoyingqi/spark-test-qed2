@@ -42,9 +42,9 @@ public class MidService {
 //        out.write(("=====排序结束==" + TimeUtil.formatDate(new Date(), TimeUtil.DATE_TIME_MILLIS_TYPE) + "===\n").getBytes("UTF-8"));
 
         // filter data
-        Integer topIndex = AlgorithmUtil.wxdLast1DownOn(list, 500 * IConst.WXD_FACTOR);
+        Integer topIndex = AlgorithmUtil.floor4(AlgorithmUtil.wxdLast1DownOn(list, 500 * IConst.WXD_FACTOR));
         Date topTime = list.get(topIndex).getTime();
-        Integer lowerIndex = AlgorithmUtil.wxdFirst1DownOn(list, 0 * IConst.WXD_FACTOR, topIndex);
+        Integer lowerIndex = AlgorithmUtil.ceil4(AlgorithmUtil.wxdFirst1DownOn(list, 0 * IConst.WXD_FACTOR, topIndex));
         Date lowerTime = list.get(lowerIndex).getTime();
 
         Log.info("=====topIndex=={}======time=={}=====", topIndex, TimeUtil.formatDate(topTime, TimeUtil.TIME_MILLIS_TYPE));
@@ -55,7 +55,7 @@ public class MidService {
             topIndex = lowerIndex;
             lowerIndex = temp;
         }*/
-
+        // 500-0 高度 下降
         List<RowModel> newList = list.subList(topIndex, lowerIndex);
 //        List<RowModel> newList = HiveDataSplit.fliterData(list, topTime, lowerTime);
 

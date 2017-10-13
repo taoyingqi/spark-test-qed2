@@ -43,4 +43,14 @@ public class AlgorithmUtil {
         return Math.abs(x);
     }
 
+    // 返回不大于x的最大4的倍数
+    public static int floor4(int x) {
+        return x - x % 4;
+    }
+
+    // 返回不小于x的最小4的倍数
+    public static int ceil4(int x) {
+        return x - x % 4 + 4;
+    }
+
 }
