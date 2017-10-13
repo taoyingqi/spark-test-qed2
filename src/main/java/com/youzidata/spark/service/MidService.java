@@ -26,7 +26,7 @@ public class MidService {
     private static final Logger Log = LoggerFactory.getLogger(MidService.class);
 
     public static List<Mid> dataProcess(List<RowModel> list, FSDataOutputStream out) throws Exception {
-        out.write(("=====开始计算==" + TimeUtil.formatDate(new Date(), TimeUtil.DATE_TIME_MILLIS_TYPE) + "===\n").getBytes("UTF-8"));
+//        out.write(("=====开始计算==" + TimeUtil.formatDate(new Date(), TimeUtil.DATE_TIME_MILLIS_TYPE) + "===\n").getBytes("UTF-8"));
         // order by date, time
         /*Collections.sort(list, new Comparator<RowModel>() {
 
@@ -39,7 +39,7 @@ public class MidService {
                 return o1.getTime().compareTo(o2.getTime());
             }
         });*/
-        out.write(("=====排序结束==" + TimeUtil.formatDate(new Date(), TimeUtil.DATE_TIME_MILLIS_TYPE) + "===\n").getBytes("UTF-8"));
+//        out.write(("=====排序结束==" + TimeUtil.formatDate(new Date(), TimeUtil.DATE_TIME_MILLIS_TYPE) + "===\n").getBytes("UTF-8"));
 
         // filter data
         Integer topIndex = AlgorithmUtil.wxdLast1DownOn(list, 500 * IConst.WXD_FACTOR);
@@ -66,14 +66,14 @@ public class MidService {
         Log.info("====5=={}", newList.get(5));
 
         Log.info("=====过滤后数据量=={}=====", newList.size());
-        out.write(("=====获取500-0=="+(new Date()).getTime()+"===\n").getBytes("UTF-8"));
+//        out.write(("=====获取500-0=="+(new Date()).getTime()+"===\n").getBytes("UTF-8"));
 
         // mid calc
         List<Mid> midList = calc(newList);
         Log.info("=====处理后数据量=={}=====", midList.size());
 
         write(midList, out);
-        out.write(("=====写入中间表=="+(new Date()).getTime()+"===\n").getBytes("UTF-8"));
+//        out.write(("=====写入中间表=="+(new Date()).getTime()+"===\n").getBytes("UTF-8"));
 
         return midList;
     }

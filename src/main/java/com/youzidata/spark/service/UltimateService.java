@@ -34,13 +34,13 @@ public class UltimateService {
         List<RowModel> newList = list.subList(topIndex, list.size());
 //                HiveDataSplit.fliterData(list, lowerTime, topTime);
         Log.info("=====过滤后数据量=={}=====", newList.size());
-        out.write(("=====获取800以后==" + (new Date()).getTime() + "===\n").getBytes("UTF-8"));
+//        out.write(("=====获取800以后==" + (new Date()).getTime() + "===\n").getBytes("UTF-8"));
 
         // ultimate calc
         Ultimate ultimate = calc(newList, midList);
 
         write(ultimate, out);
-        out.write(("=====写入结果表==" + (new Date()).getTime() + "===\n").getBytes("UTF-8"));
+//        out.write(("=====写入结果表==" + (new Date()).getTime() + "===\n").getBytes("UTF-8"));
 
         return ultimate;
     }
@@ -165,7 +165,7 @@ public class UltimateService {
     }
 
     public static void write(Ultimate ultimate, FSDataOutputStream out) throws IOException {
-        String row = ultimate.getFlightId()
+        String row = "\n\n" + ultimate.getFlightId()
                 + "," + ultimate.getDown500n()
                 + "," + TimeUtil.formatDate(ultimate.getLast1Down500Time(), TimeUtil.TIME_MILLIS_TYPE)
                 + "," + ultimate.getDown0n()
