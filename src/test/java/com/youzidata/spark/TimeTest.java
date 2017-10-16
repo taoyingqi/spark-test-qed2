@@ -3,6 +3,7 @@ package com.youzidata.spark;
 import com.youzidata.spark.util.TimeUtil;
 import org.junit.Test;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class TimeTest {
@@ -16,5 +17,12 @@ public class TimeTest {
         System.out.println(date.equals(date2));
     }
 
+    @Test
+    public void testMillis() {
+        Date date = TimeUtil.parseDate("20170908121200250", TimeUtil.DATE_TIME_MILLIS_TYPE);
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        System.out.println(c.get(Calendar.MILLISECOND));
+    }
 
 }

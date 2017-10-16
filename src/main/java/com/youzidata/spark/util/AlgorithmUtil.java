@@ -2,6 +2,8 @@ package com.youzidata.spark.util;
 
 import com.youzidata.spark.model.RowModel;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -28,7 +30,7 @@ public class AlgorithmUtil {
     // 定阶段，按无线电高度（首次）下降到0
     public static Integer wxdFirst1DownOn(List<RowModel> list, int wxd, int start) {
         for(int i = start; i < list.size(); i++){
-            if(list.get(i).getWxd() <= wxd){
+            if(list.get(i).getWxd() < wxd){
                 return i;
             }
         }
@@ -52,5 +54,13 @@ public class AlgorithmUtil {
     public static int ceil4(int x) {
         return x - x % 4 + 4;
     }
+
+    // 毫秒数/250
+    public static int remainder4(Date date) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(date);
+        return c.get(Calendar.MILLISECOND) / 250;
+    }
+
 
 }
